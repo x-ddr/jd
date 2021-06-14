@@ -7,17 +7,17 @@
 ==============Quantumult X==============
 [task_local]
 #京喜领88元红包
-4 10 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js, tag=京喜领88元红包, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+4 10 * * * jd_jxlhb.js, tag=京喜领88元红包, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ==============Loon==============
 [Script]
-cron "4 10 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js,tag=京喜领88元红包
+cron "4 10 * * *" script-path=jd_jxlhb.js,tag=京喜领88元红包
 
 ================Surge===============
-京喜领88元红包 = type=cron,cronexp="4 10 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js
+京喜领88元红包 = type=cron,cronexp="4 10 * * *",wake-system=1,timeout=3600,script-path=jd_jxlhb.js
 
 ===============小火箭==========
-京喜领88元红包 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxlhb.js, cronexpr="4 10 * * *", timeout=3600, enable=true
+京喜领88元红包 = type=cron,script-path=jd_jxlhb.js, cronexpr="4 10 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京喜领88元红包');
 const notify = $.isNode() ? require('./sendNotify') : {};
@@ -49,7 +49,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
       '助力逻辑：先自己京东账号相互助力，如有剩余助力机会，则助力作者\n' +
       '温馨提示：如提示助力火爆，可尝试寻找京东客服')
   let res = await getAuthorShareCode() || [];
-  let res2 = await getAuthorShareCode('http://cdn.annnibb.me/cf79ae6addba60ad018347359bd144d2.json') || [];
+  let res2 = await getAuthorShareCode('http://gh.tryxd.cn/https://github.com/x-dr/shareCodeList/blob/main/jx.json') || [];
   if (res && res.activeId) $.activeId = res.activeId;
   $.authorMyShareIds = [...((res && res.codes) || []), ...res2];
   //开启红包,获取互助码
@@ -69,15 +69,6 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
     $.canHelp = true;
     $.max = false;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    for (let code of $.packetIdArr) {
-      if (!code) continue;
-      if ($.UserName === code['userName']) continue;
-      if (!$.canHelp) break
-      if ($.max) break
-      console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
-      await enrollFriend(code['strUserPin']);
-      await $.wait(2500);
-    }
     if ($.canHelp) {
       console.log(`\n【${$.UserName}】有剩余助力机会，开始助力作者\n`)
       for (let item of $.authorMyShareIds) {
@@ -88,6 +79,16 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
         await $.wait(2500);
       }
     }
+    for (let code of $.packetIdArr) {
+      if (!code) continue;
+      if ($.UserName === code['userName']) continue;
+      if (!$.canHelp) break
+      if ($.max) break
+      console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
+      await enrollFriend(code['strUserPin']);
+      await $.wait(2500);
+    }
+    
   }
   //拆红包
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -243,7 +244,7 @@ function openRedPack(strPin, grade) {
   })
 }
 
-function getAuthorShareCode(url = "https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jxhb.json") {
+function getAuthorShareCode(url = "https://gh.tryxd.cn/https://github.com/x-dr/shareCodeList/blob/main/jxhb.json") {
   return new Promise(resolve => {
     const options = {
       url: `${url}?${new Date()}`, "timeout": 10000, headers: {
@@ -288,7 +289,7 @@ function TotalBean() {
         Accept: "*/*",
         Connection: "keep-alive",
         Cookie: cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./JS_USER_AGENTS.js').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         "Accept-Language": "zh-cn",
         "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
         "Accept-Encoding": "gzip, deflate, br"
