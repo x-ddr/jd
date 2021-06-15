@@ -658,7 +658,7 @@ cron "5 * * * *" script-path=https://raw.githubusercontent.com/yangtingxiao/Quan
               //await zoo_pk_assistGroup()
               //if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 )
               if (parseInt(data.data.result.homeMainInfo.raiseInfo.totalScore) >= parseInt(data.data.result.homeMainInfo.raiseInfo.nextLevelScore) ) await zoo_raise(1000)
-              if (date.getHours() >= 0 && date.getHours() < 10) {
+              if (date.getHours() >= 0 && date.getHours() < 1) {
                 console.log("2");
                 await zoo_getHomeData('ZXTKT0225KkcRhdI8AHeJx_8x_9cIgFjRWn6-7zx55awQ');
                 console.log("2");
@@ -773,8 +773,9 @@ cron "5 * * * *" script-path=https://raw.githubusercontent.com/yangtingxiao/Quan
             if (inviteId !== "") {
               await $.getScript("https://gh.tryxd.cn/https://github.com/x-dr/shareCodeList/blob/main/jd_zooShareCode.txt").then((text) => (shareCodeList = text ? text.split('\n') : []))
               for (let i in shareCodeList) {
-                  console.log("助力"+shareCodeList[i]);
+                  
                 if (shareCodeList[i]) await zoo_pk_assistGroup(shareCodeList[i]);
+                console.log("助力"+shareCodeList[i]);
               }
               //await zoo_pk_assistGroup(inviteId);
             } else {
