@@ -658,7 +658,7 @@ cron "5 * * * *" script-path=https://raw.githubusercontent.com/yangtingxiao/Quan
               //await zoo_pk_assistGroup()
               //if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 )
               if (parseInt(data.data.result.homeMainInfo.raiseInfo.totalScore) >= parseInt(data.data.result.homeMainInfo.raiseInfo.nextLevelScore) ) await zoo_raise(1000)
-            //   if (date.getHours() >= 0 && date.getHours() < 1) {
+              if (date.getHours() >= 0 && date.getHours() < 10) {
                 console.log("2");
                 await zoo_getHomeData('ZXTKT0225KkcRhdI8AHeJx_8x_9cIgFjRWn6-7zx55awQ');
                 console.log("2");
@@ -666,7 +666,7 @@ cron "5 * * * *" script-path=https://raw.githubusercontent.com/yangtingxiao/Quan
                 console.log("2");
                 await zoo_getHomeData('ZXTKT011a33MlJa1ogsFjRWn6-7zx55awQ');
 
-            //   }
+              }
               await zoo_getTaskDetail()
               await zoo_getTaskDetail("","app")
             } else {
