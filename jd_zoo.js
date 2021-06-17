@@ -661,10 +661,10 @@ function zoo_getHomeData(inviteId= "",timeout = 0) {
             //await zoo_pk_assistGroup()
             //if (data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 )
             if ( data.data.result.homeMainInfo.raiseInfo.buttonStatus === 1 && parseInt(data.data.result.homeMainInfo.raiseInfo.totalScore) >= parseInt(data.data.result.homeMainInfo.raiseInfo.nextLevelScore) ) await zoo_raise(1000)
-            // if (date.getHours() >= 0 && date.getHours() < 1) {
-              await zoo_getHomeData('ZXTKT011a33MlJa1ogsFjRWn6-7zx55awQ');
-               console.log("pk3")
-            // }
+             if (date.getHours() >= 0 && date.getHours() < 1) {
+              // await zoo_getHomeData('ZXTKT011a33MlJa1ogsFjRWn6-7zx55awQ');
+              //  console.log("pk3")
+             }
             await zoo_getTaskDetail()
             await zoo_getTaskDetail("","app")
           } else {
