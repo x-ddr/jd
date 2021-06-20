@@ -58,9 +58,9 @@ $.appId = 10009;
   }
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
-  let res = {}, res2 = await getAuthorShareCode("cfd.json")
-  if (new Date().getHours() <= 3) res = await getAuthorShareCode('');
-  if (!res2) res2 = await getAuthorShareCode('cfd.json')
+  let res = {}, res2 = await getAuthorShareCode("https://gh.tryxd.cn/https://github.com/x-dr/shareCodeList/blob/main/cfd.json")
+  if (new Date().getHours() <= 3) res = await getAuthorShareCode('https://gh.tryxd.cn/https://github.com/x-dr/shareCodeList/blob/main/cfd.json');
+  if (!res2) res2 = await getAuthorShareCode('https://gh.tryxd.cn/https://github.com/x-dr/shareCodeList/blob/main/cfd.json')
   $.strMyShareIds = [...(res && res.shareId || []),...(res2 && res2.shareId || [])]
   $.strGroupIds = [...(res && res.strGroupIds || []),...(res2 && res2.strGroupIds || [])]
   for (let i = 0; i < cookiesArr.length; i++) {
