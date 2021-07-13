@@ -11,7 +11,6 @@ env_name=(
   DREAM_FACTORY_SHARE_CODES
   DDFACTORY_SHARECODES
   JDZZ_SHARECODES
-  JDJOY_SHARECODES
   JXNC_SHARECODES
   BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
@@ -26,7 +25,6 @@ var_name=(
   ForOtherDreamFactory
   ForOtherJdFactory
   ForOtherJdzz
-  ForOtherJoy
   ForOtherJxnc
   ForOtherBookShop
   ForOtherCash
@@ -42,7 +40,6 @@ name_js=(
   x-dr_jd_jd_dreamFactory
   x-dr_jd_jd_jdfactory
   x-dr_jd_jd_jdzz
-  x-dr_jd_jd_crazy_joy
   x-dr_jd_jd_jxnc
   x-dr_jd_jd_bookshop
   x-dr_jd_jd_cash
@@ -58,7 +55,6 @@ name_config=(
   DreamFactory
   JdFactory
   Jdzz
-  Joy
   Jxnc
   BookShop
   Cash
@@ -74,7 +70,6 @@ name_chinese=(
   京喜工厂
   东东工厂
   京东赚赚
-  crazyJoy任务
   京喜农场
   口袋书店
   签到领现金
