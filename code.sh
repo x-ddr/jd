@@ -44,7 +44,7 @@ name_js=(
   x-dr_jd_jd_bookshop
   x-dr_jd_jd_cash
   x-dr_jd_jd_sgmh
-  x-dr_jd_jd_cfd
+  x-dr_jd_jd_cfd_new
   x-dr_jd_jd_health
 )
 
