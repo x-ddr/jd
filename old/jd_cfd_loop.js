@@ -1,7 +1,6 @@
 /*
-
 cron 0 * * * * jd_cfd_loop.js
- */
+*/
 
 const {format} = require('date-fns');
 const axios = require('axios');
