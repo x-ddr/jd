@@ -11,6 +11,7 @@ env_name=(
   DREAM_FACTORY_SHARE_CODES
   DDFACTORY_SHARECODES
   JDZZ_SHARECODES
+  JDJOY_SHARECODES
   JXNC_SHARECODES
   BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
@@ -25,6 +26,7 @@ var_name=(
   ForOtherDreamFactory
   ForOtherJdFactory
   ForOtherJdzz
+  ForOtherJoy
   ForOtherJxnc
   ForOtherBookShop
   ForOtherCash
@@ -40,11 +42,12 @@ name_js=(
   x-dr_jd_jd_dreamFactory
   x-dr_jd_jd_jdfactory
   x-dr_jd_jd_jdzz
+  x-dr_jd_jd_crazy_joy
   x-dr_jd_jd_jxnc
   x-dr_jd_jd_bookshop
   x-dr_jd_jd_cash
   x-dr_jd_jd_sgmh
-  x-dr_jd_jd_cfd_new
+  x-dr_jd_jd_cfd
   x-dr_jd_jd_health
 )
 
@@ -55,6 +58,7 @@ name_config=(
   DreamFactory
   JdFactory
   Jdzz
+  Joy
   Jxnc
   BookShop
   Cash
@@ -70,6 +74,7 @@ name_chinese=(
   京喜工厂
   东东工厂
   京东赚赚
+  crazyJoy任务
   京喜农场
   口袋书店
   签到领现金
@@ -193,7 +198,7 @@ export_codes_sub() {
 
 export_all_codes() {
     gen_pt_pin_array
-    echo -e "\n# 从日志提取互助码，编号和配置文件中Cookie编号完全对应，如果为空就是所有日志中都没有。\n\n# 即使某个MyXxx变量未赋值，也可以将其变量名填在ForOtherXxx中，jtask脚本会自动过滤空值。\n"
+    echo -e "\n# 从日志提取互助码，如果为空就是所有日志中都没有。\n"
     echo -n "# 你选择的互助码模板为："
     case $HelpType in
     0)
@@ -216,3 +221,35 @@ export_all_codes() {
 }
 
 export_all_codes | perl -pe "{s|京东种豆|种豆|; s|crazyJoy任务|疯狂的JOY|}"
+
+combine_sub() {
+    local what_combine=$1
+    local combined_all=""
+    local tmp1 tmp2
+    local envs=$(eval echo "\$JD_COOKIE")
+    local array=($(echo $envs | sed 's/&/ /g'))
+    local user_sum=${#array[*]}
+    for ((i = 1; i <= $user_sum; i++)); do
+        local tmp1=$what_combine$i
+        local tmp2=${!tmp1}
+        combined_all="$combined_all&$tmp2"
+    done
+    echo $combined_all | perl -pe "{s|^&||; s|^@+||; s|&@|&|g; s|@+&|&|g; s|@+|@|g; s|@+$||}"
+}
+
+## 正常依次运行时，组合所有账号的Cookie与互助码
+combine_all() {
+    echo -e "\n## 互助变量："
+    for ((i = 0; i < ${#env_name[*]}; i++)); do
+        result=$(combine_sub ${var_name[i]})
+        if [[ $result ]]; then
+            echo "export ${env_name[i]}=\"$result\""
+        fi
+    done
+}
+
+if [[ $(ls $dir_code) ]]; then
+    latest_log=$(ls -r $dir_code | head -1)
+    . $dir_code/$latest_log
+    combine_all
+fi
