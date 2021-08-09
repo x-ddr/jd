@@ -7,25 +7,26 @@
 ===================quantumultx================
 [task_local]
 #东东健康社区
-13 1,6,22 * * * jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 1,6,22 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "13 1,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
+cron "13 1,6,22 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_health.js, tag=东东健康社区
 
 ====================Surge================
-东东健康社区 = type=cron,cronexp="13 1,6,22 * * *",wake-system=1,timeout=3600,script-path=jd_health.js
+东东健康社区 = type=cron,cronexp="13 1,6,22 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_health.js
 
 ============小火箭=========
-东东健康社区 = type=cron,script-path=jd_health.js, cronexpr="13 1,6,22 * * *", timeout=3600, enable=true
+东东健康社区 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_health.js, cronexpr="13 1,6,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 const notify = $.isNode() ? require('./sendNotify') : "";
 let cookiesArr = [], cookie = "", allMessage = "", message;
 const inviteCodes = [
-  `T0225KkcRhdI8AHeJx_8x_9cIgCjVfnoaW5kRrbA`,
-  `T0225KkcRU0Y8FXeJBL2xqFbcQCjVfnoaW5kRrbA`
+  `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA`,
+  `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA`,
+  `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA`,
 ]
 let reward = process.env.JD_HEALTH_REWARD_NAME ? process.env.JD_HEALTH_REWARD_NAME : ''
 const randomCount = $.isNode() ? 20 : 5;
@@ -38,7 +39,7 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-const JD_API_HOST = "https://api.m.jd.com/client.action";
+const JD_API_HOST = "https://api.m.jd.com/";
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, "【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取", "https://bean.m.jd.com/", {"open-url": "https://bean.m.jd.com/"});
@@ -143,24 +144,35 @@ function getTaskDetail(taskId = '') {
               await doTask(data?.data?.result?.taskVos[0].shoppingActivityVos[0]?.taskToken, 22, 1)//领取任务
               await $.wait(1000 * (data?.data?.result?.taskVos[0]?.waitDuration || 3));
               await doTask(data?.data?.result?.taskVos[0].shoppingActivityVos[0]?.taskToken, 22, 0);//完成任务
-            } else for (let vo of data?.data?.result?.taskVos.filter(vo => vo.taskType !== 19) ?? []) {
-              console.log(`${vo.taskName}任务，完成次数：${vo.times}/${vo.maxTimes}`)
-              for (let i = vo.times; i < vo.maxTimes; ++i) {
-                console.log(`去完成${vo.taskName}任务`)
-                if (vo.taskType === 13) {
-                  await doTask(vo.simpleRecordInfoVo?.taskToken, vo?.taskId)
-                } else if (vo.taskType === 8) {
-                  await doTask(vo.productInfoVos[i]?.taskToken, vo?.taskId, 1)
-                  await $.wait(1000 * 10)
-                  await doTask(vo.productInfoVos[i]?.taskToken, vo?.taskId, 0)
-                } else if (vo.taskType === 9) {
-                  await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId, 1)
-                  await $.wait(1000 * 10)
-                  await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId, 0)
-                } else if (vo.taskType === 10) {
-                  await doTask(vo.threeMealInfoVos[0]?.taskToken, vo?.taskId)
-                } else if (vo.taskType === 26 || vo.taskType === 3) {
-                  await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId)
+            } else {
+              for (let vo of data?.data?.result?.taskVos.filter(vo => vo.taskType !== 19) ?? []) {
+                console.log(`${vo.taskName}任务，完成次数：${vo.times}/${vo.maxTimes}`)
+                for (let i = vo.times; i < vo.maxTimes; i++) {
+                  console.log(`去完成${vo.taskName}任务`)
+                  if (vo.taskType === 13) {
+                    await doTask(vo.simpleRecordInfoVo?.taskToken, vo?.taskId)
+                  } else if (vo.taskType === 8) {
+                    await doTask(vo.productInfoVos[i]?.taskToken, vo?.taskId, 1)
+                    await $.wait(1000 * 10)
+                    await doTask(vo.productInfoVos[i]?.taskToken, vo?.taskId, 0)
+                  } else if (vo.taskType === 9) {
+                    await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId, 1)
+                    await $.wait(1000 * 10)
+                    await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId, 0)
+                  } else if (vo.taskType === 10) {
+                    await doTask(vo.threeMealInfoVos[0]?.taskToken, vo?.taskId)
+                  } else if (vo.taskType === 26 || vo.taskType === 3) {
+                    await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId)
+                  } else if (vo.taskType === 1) {
+                    for (let key of Object.keys(vo.followShopVo)) {
+                      let taskFollow = vo.followShopVo[key]
+                      if (taskFollow.status !== 2) {
+                        await doTask(taskFollow.taskToken, vo.taskId, 0)
+                        break
+                      }
+                    }
+                  }
+                  await $.wait(2000)
                 }
               }
             }
@@ -281,11 +293,14 @@ function collectScore() {
 
 function taskUrl(function_id, body = {}) {
   return {
-    url: `${JD_API_HOST}/client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0`,
+    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0&uuid=`,
     headers: {
       "Cookie": cookie,
       "origin": "https://h5.m.jd.com",
       "referer": "https://h5.m.jd.com/",
+      'accept-language': 'zh-cn',
+      'accept-encoding': 'gzip, deflate, br',
+      'accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/x-www-form-urlencoded',
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
