@@ -32,7 +32,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //助力好友分享码(最多3个,否则后面的助力失败)
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
-let shareCodes = ['jnf5gho2l7qfcqcoly2jvxwe2e@a355so2hppyl3on7tb3pjq4ose5ac3f4ijdgqji@qpb2rslaqgfqrqgpyys4ntjufi@apbxfpf6dbdpionlru2jgw56ua@zbei5cjpebrwm4gkhhsl6qqgg45ac3f4ijdgqji@k6yd26t2pfvgyf3ijtpbovcsythqclxqbretgwa']
+let shareCodes = ['olmijoxgmjutyw4mo7dphrnfywp3bakejcbqbdi@mlrdw3aw26j3wrlmdh6ycidl5llzqdvuzicv7nq@zhiycffbu5irbsmlv4b5csnha4']
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
