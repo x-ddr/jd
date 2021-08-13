@@ -20,7 +20,7 @@ let useInfo = {};
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let newShareCodes = [];
-let lsjdh = '';
+let lsjdh = 'jdAward3';
 if (process.env.lsjdh) {
   lsjdh = process.env.lsjdh;
 }
@@ -89,14 +89,7 @@ if ($.isNode()) {
   })
 async function star() {
 await gettoken()
-$.log("开始入会任务")
-await dojoinMember(1000101562)
-await $.wait(3000)
-await dojoinMember(1000077335)
-await $.wait(3000)
-await dojoinMember(1000008814)
-await $.wait(3000)
-await dojoinMember(1000014803)
+
 $.log("开始领取首页水滴")
 await dotree(1)
 await $.wait(3000)
