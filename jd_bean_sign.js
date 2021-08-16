@@ -117,7 +117,7 @@ async function downFile () {
   if ($.body) {
     url = 'https://gh.tryxd.cn/https://github.com/NobyDa/Script/blob/master/JD-DailyBonus/JD_DailyBonus.js';
   } else {
-    url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
+    url = 'https://gh.tryxd.cn/https://github.com/NobyDa/Script/blob/master/JD-DailyBonus/JD_DailyBonus.js';
   }
   try {
     const options = { }
